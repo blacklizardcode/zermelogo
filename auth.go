@@ -2,6 +2,7 @@ package zermelogo
 
 import (
 	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -21,7 +22,15 @@ func (c *Client) Auth() *AuthService {
 
 func (a *AuthService) CodeToBearer(code int) (string, error) {
 	var Bearer tokenResponse
-	err := a.client.do(http.MethodPost, "/api/oauth/token?code="+strconv.Itoa(code), nil, &Bearer)
+	path, err := url.Parse("/api/oauth/token")
+	if err != nil {
+		return "", err
+	}
+	q := path.Query()
+	q.Add("code", strconv.Itoa(code))
+	path.RawQuery = q.Encode()
+
+	err = a.client.do(http.MethodPost, path.String(), nil, &Bearer)
 	if err != nil {
 		return "", err
 	}
