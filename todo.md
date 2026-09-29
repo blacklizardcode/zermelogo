@@ -1,24 +1,24 @@
 - [x] appointments
-- [ ] branchesofschools
-- [ ] contracts
-- [ ] courses
-- [ ] departmentsofbranch
-- [ ] employeeabsences
-- [ ] employees
-- [ ] enrollmentstatus
-- [ ] familymembers
-- [ ] groupindepartments
-- [ ] holidays
-- [ ] jobs
-- [ ] liveschedule
-- [ ] locationofbranches
-- [ ] parentteachernights
-- [ ] parenttoschedulerremarks
-- [ ] schoolsinschoolyears
-- [ ] studentsindepartments
-- [ ] students
-- [ ] students
-- [ ] talkdays
-- [ ] talktimeblockabsenceparent
-- [ ] talktimeblocks
-- [ ] users
+- [x] branchesofschools
+- [x] contracts
+- [x] courses
+- [x] departmentsofbranches
+- [x] employeeabsences
+- [x] employees
+- [x] enrollmentstatus
+- [x] familymembers
+- [x] groupindepartments
+- [x] holidays
+- [x] jobs
+- [x] liveschedule
+- [x] locationofbranches
+- [x] parentteachernights
+- [x] parenttoschedulerremarks
+- [x] schoolsinschoolyears
+- [x] studentsindepartments
+- [x] students
+- [x] students
+- [x] talkdays
+- [x] talktimeblockabsenceparent
+- [x] talktimeblocks
+- [x] users
