@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// UsersParams holds the query filters for GetUsers and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type UsersParams struct {
 	Admin                               bool               `url:"admin,omitempty" json:"admin,omitempty"`
 	Archived                            bool               `url:"archived,omitempty" json:"archived,omitempty"`
@@ -64,6 +68,8 @@ type UsersParams struct {
 	Type                                string             `url:"type,omitempty" json:"type,omitempty"`
 }
 
+// UsersResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type UsersResponse struct {
 	Response struct {
 		Status int           `json:"status"`
@@ -71,6 +77,8 @@ type UsersResponse struct {
 	} `json:"response"`
 }
 
+// GetUsers calls /api/v3/users and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetUsers(param UsersParams) ([]UsersParams, error) {
 	var Output UsersResponse
 	path, err := url.Parse("/api/v3/users")

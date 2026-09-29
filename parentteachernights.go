@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// ParentTeacherNightsParams holds the query filters for GetParentTeacherNights and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type ParentTeacherNightsParams struct {
 	AllowRequestingUntil            int64              `url:"allowRequestingUntil,omitempty" json:"allowRequestingUntil,omitempty"`
 	Archived                        bool               `url:"archived,omitempty" json:"archived,omitempty"`
@@ -33,6 +37,8 @@ type ParentTeacherNightsParams struct {
 	FamilyMember                    []int              `url:"familyMember,omitempty" json:"familyMember,omitempty"`
 }
 
+// ParentTeacherNightsResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type ParentTeacherNightsResponse struct {
 	Response struct {
 		Status int                         `json:"status"`
@@ -40,6 +46,8 @@ type ParentTeacherNightsResponse struct {
 	} `json:"response"`
 }
 
+// GetParentTeacherNights calls /api/v3/parentteachernights and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetParentTeacherNights(param ParentTeacherNightsParams) ([]ParentTeacherNightsParams, error) {
 	var Output ParentTeacherNightsResponse
 	path, err := url.Parse("/api/v3/parentteachernights")

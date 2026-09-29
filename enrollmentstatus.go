@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// EnrollmentStatusParams holds the query filters for GetEnrollmentStatus and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type EnrollmentStatusParams struct {
 	ActivityEnrollment          int                `url:"activityEnrollment,omitempty" json:"activityEnrollment,omitempty"`
 	ConcurrentPlannedAttendance int                `url:"concurrentPlannedAttendance,omitempty" json:"concurrentPlannedAttendance,omitempty"`
@@ -32,6 +36,8 @@ type EnrollmentStatusParams struct {
 	Fields                      string             `url:"fields,omitempty" json:"fields,omitempty"`
 }
 
+// EnrollmentStatusResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type EnrollmentStatusResponse struct {
 	Response struct {
 		Status int                      `json:"status"`
@@ -39,6 +45,8 @@ type EnrollmentStatusResponse struct {
 	} `json:"response"`
 }
 
+// GetEnrollmentStatus calls /api/v3/enrollmentstatus and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetEnrollmentStatus(param EnrollmentStatusParams) ([]EnrollmentStatusParams, error) {
 	var Output EnrollmentStatusResponse
 	path, err := url.Parse("/api/v3/enrollmentstatus")

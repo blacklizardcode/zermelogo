@@ -1,6 +1,6 @@
 package main
 
-import zermelogo "blacklizardcode/zermelo-go"
+import zermelogo "github.com/blacklizardcode/zermelogo"
 
 func runAllTests(c *zermelogo.Client, schoolInSchoolYear zermelogo.SchoolInSchoolYear) {
 	testAppointments(c, schoolInSchoolYear)

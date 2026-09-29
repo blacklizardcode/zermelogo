@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// EmployeeAbsencesParams holds the query filters for GetEmployeeAbsences and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type EmployeeAbsencesParams struct {
 	AbsenceDuration         float64            `url:"absenceDuration,omitempty" json:"absenceDuration,omitempty"`
 	AbsenceDurationManually bool               `url:"absenceDurationManually,omitempty" json:"absenceDurationManually,omitempty"`
@@ -41,6 +45,8 @@ type EmployeeAbsencesParams struct {
 	Unlinked                bool               `url:"unlinked,omitempty" json:"unlinked,omitempty"`
 }
 
+// EmployeeAbsencesResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type EmployeeAbsencesResponse struct {
 	Response struct {
 		Status int                      `json:"status"`
@@ -48,6 +54,8 @@ type EmployeeAbsencesResponse struct {
 	} `json:"response"`
 }
 
+// GetEmployeeAbsences calls /api/v3/employeeabsences and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetEmployeeAbsences(param EmployeeAbsencesParams) ([]EmployeeAbsencesParams, error) {
 	var Output EmployeeAbsencesResponse
 	path, err := url.Parse("/api/v3/employeeabsences")

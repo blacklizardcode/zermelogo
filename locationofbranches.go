@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// LocationsOfBranchesParams holds the query filters for GetLocationsOfBranches and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type LocationsOfBranchesParams struct {
 	AllowMeetings                  bool               `url:"allowMeetings,omitempty" json:"allowMeetings,omitempty"`
 	Branch                         int                `url:"branch,omitempty" json:"branch,omitempty"`
@@ -21,6 +25,8 @@ type LocationsOfBranchesParams struct {
 	Fields                         string             `url:"fields,omitempty" json:"fields,omitempty"`
 }
 
+// LocationsOfBranchesResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type LocationsOfBranchesResponse struct {
 	Response struct {
 		Status int                         `json:"status"`
@@ -28,6 +34,8 @@ type LocationsOfBranchesResponse struct {
 	} `json:"response"`
 }
 
+// GetLocationsOfBranches calls /api/v3/locationofbranches and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetLocationsOfBranches(param LocationsOfBranchesParams) ([]LocationsOfBranchesParams, error) {
 	var Output LocationsOfBranchesResponse
 	path, err := url.Parse("/api/v3/locationofbranches")

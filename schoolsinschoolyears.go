@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// SchoolsInSchoolYearsParams holds the query filters for GetSchoolsInSchoolYears and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type SchoolsInSchoolYearsParams struct {
 	Archived               bool               `url:"archived,omitempty" json:"archived,omitempty"`
 	ArchivedTime           int64              `url:"archivedTime,omitempty" json:"archivedTime,omitempty"`
@@ -31,6 +35,8 @@ type SchoolsInSchoolYearsParams struct {
 	UseHrms                bool               `url:"useHrms,omitempty" json:"useHrms,omitempty"`
 }
 
+// SchoolsInSchoolYearsResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type SchoolsInSchoolYearsResponse struct {
 	Response struct {
 		Status int                          `json:"status"`
@@ -38,6 +44,8 @@ type SchoolsInSchoolYearsResponse struct {
 	} `json:"response"`
 }
 
+// GetSchoolsInSchoolYears calls /api/v3/schoolsinschoolyears and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetSchoolsInSchoolYears(param SchoolsInSchoolYearsParams) ([]SchoolsInSchoolYearsParams, error) {
 	var Output SchoolsInSchoolYearsResponse
 	path, err := url.Parse("/api/v3/schoolsinschoolyears")

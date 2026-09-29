@@ -1,7 +1,7 @@
 package main
 
 import (
-	zermelogo "blacklizardcode/zermelo-go"
+	zermelogo "github.com/blacklizardcode/zermelogo"
 	"time"
 )
 

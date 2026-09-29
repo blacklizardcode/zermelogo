@@ -1,6 +1,6 @@
 package main
 
-import zermelogo "blacklizardcode/zermelo-go"
+import zermelogo "github.com/blacklizardcode/zermelogo"
 
 func testParentTeacherNights(c *zermelogo.Client, schoolInSchoolYear zermelogo.SchoolInSchoolYear) {
 	parentTeacherNights, err := c.GetParentTeacherNights(zermelogo.ParentTeacherNightsParams{

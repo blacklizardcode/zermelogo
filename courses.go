@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// CoursesParams holds the query filters for GetCourses and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type CoursesParams struct {
 	BranchCode            string             `url:"branchCode,omitempty" json:"branchCode,omitempty"`
 	ChoosableInDepartment int                `url:"choosableInDepartment,omitempty" json:"choosableInDepartment,omitempty"`
@@ -27,6 +31,8 @@ type CoursesParams struct {
 	Teacher               string             `url:"teacher,omitempty" json:"teacher,omitempty"`
 }
 
+// CoursesResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type CoursesResponse struct {
 	Response struct {
 		Status int             `json:"status"`
@@ -34,6 +40,8 @@ type CoursesResponse struct {
 	} `json:"response"`
 }
 
+// GetCourses calls /api/v3/courses and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetCourses(param CoursesParams) ([]CoursesParams, error) {
 	var Output CoursesResponse
 	path, err := url.Parse("/api/v3/courses")

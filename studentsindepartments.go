@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// StudentsInDepartmentsParams holds the query filters for GetStudentsInDepartments and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type StudentsInDepartmentsParams struct {
 	DeanApprovesSelection           bool               `url:"deanApprovesSelection,omitempty" json:"deanApprovesSelection,omitempty"`
 	DepartmentOfBranch              int                `url:"departmentOfBranch,omitempty" json:"departmentOfBranch,omitempty"`
@@ -58,6 +62,8 @@ type StudentsInDepartmentsParams struct {
 	VisibleToStudent                bool               `url:"visibleToStudent,omitempty" json:"visibleToStudent,omitempty"`
 }
 
+// StudentsInDepartmentsResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type StudentsInDepartmentsResponse struct {
 	Response struct {
 		Status int                           `json:"status"`
@@ -65,6 +71,8 @@ type StudentsInDepartmentsResponse struct {
 	} `json:"response"`
 }
 
+// GetStudentsInDepartments calls /api/v3/studentsindepartments and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetStudentsInDepartments(param StudentsInDepartmentsParams) ([]StudentsInDepartmentsParams, error) {
 	var Output StudentsInDepartmentsResponse
 	path, err := url.Parse("/api/v3/studentsindepartments")

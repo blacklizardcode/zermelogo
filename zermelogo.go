@@ -9,12 +9,17 @@ import (
 	"time"
 )
 
+// Client talks to a single Zermelo portal. It is safe to reuse across requests
+// and is safe for concurrent use.
 type Client struct {
 	baseURL    string
 	apiKey     string
 	httpClient *http.Client
 }
 
+// New returns a Client for the portal at baseURL, for example
+// https://example.zportal.nl. The client has no credentials yet, set one with
+// Auth().SetBearerToken or obtain one with Auth().CodeToBearer.
 func New(baseURL string) *Client {
 	c := &Client{
 		baseURL: baseURL,

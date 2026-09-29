@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// EmployeesParams holds the query filters for GetEmployees and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type EmployeesParams struct {
 	CommencementSchool   string             `url:"commencementSchool,omitempty" json:"commencementSchool,omitempty"`
 	CommencementTeaching string             `url:"commencementTeaching,omitempty" json:"commencementTeaching,omitempty"`
@@ -36,6 +40,8 @@ type EmployeesParams struct {
 	TeacherTeam          int                `url:"teacherTeam,omitempty" json:"teacherTeam,omitempty"`
 }
 
+// EmployeesResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type EmployeesResponse struct {
 	Response struct {
 		Status int               `json:"status"`
@@ -43,6 +49,8 @@ type EmployeesResponse struct {
 	} `json:"response"`
 }
 
+// GetEmployees calls /api/v3/employees and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetEmployees(param EmployeesParams) ([]EmployeesParams, error) {
 	var Output EmployeesResponse
 	path, err := url.Parse("/api/v3/employees")

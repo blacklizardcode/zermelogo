@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// TalkTimeBlocksParams holds the query filters for GetTalkTimeBlocks and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type TalkTimeBlocksParams struct {
 	ID                 int                `url:"id,omitempty" json:"id,omitempty"`
 	ParentTeacherNight int                `url:"parentTeacherNight,omitempty" json:"parentTeacherNight,omitempty"`
@@ -17,6 +21,8 @@ type TalkTimeBlocksParams struct {
 	SchoolInSchoolYear SchoolInSchoolYear `url:"schoolInSchoolYear,omitempty" json:"schoolInSchoolYear,omitempty"`
 }
 
+// TalkTimeBlocksResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type TalkTimeBlocksResponse struct {
 	Response struct {
 		Status int                    `json:"status"`
@@ -24,6 +30,8 @@ type TalkTimeBlocksResponse struct {
 	} `json:"response"`
 }
 
+// GetTalkTimeBlocks calls /api/v3/talktimeblocks and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetTalkTimeBlocks(param TalkTimeBlocksParams) ([]TalkTimeBlocksParams, error) {
 	var Output TalkTimeBlocksResponse
 	path, err := url.Parse("/api/v3/talktimeblocks")

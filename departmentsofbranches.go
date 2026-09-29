@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// DepartmentsOfBranchesParams holds the query filters for GetDepartmentsOfBranches and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type DepartmentsOfBranchesParams struct {
 	BranchOfSchool                        int                `url:"branchOfSchool,omitempty" json:"branchOfSchool,omitempty"`
 	BranchOfSchoolCode                    string             `url:"branchOfSchoolCode,omitempty" json:"branchOfSchoolCode,omitempty"`
@@ -55,6 +59,8 @@ type DepartmentsOfBranchesParams struct {
 	TeacherTeam                           int                `url:"teacherTeam,omitempty" json:"teacherTeam,omitempty"`
 }
 
+// DepartmentsOfBranchesResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type DepartmentsOfBranchesResponse struct {
 	Response struct {
 		Status int                           `json:"status"`
@@ -62,6 +68,8 @@ type DepartmentsOfBranchesResponse struct {
 	} `json:"response"`
 }
 
+// GetDepartmentsOfBranches calls /api/v3/departmentsofbranches and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetDepartmentsOfBranches(param DepartmentsOfBranchesParams) ([]DepartmentsOfBranchesParams, error) {
 	var Output DepartmentsOfBranchesResponse
 	path, err := url.Parse("/api/v3/departmentsofbranches")

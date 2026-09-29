@@ -1,8 +1,8 @@
 package main
 
 import (
-	zermelogo "blacklizardcode/zermelo-go"
 	"fmt"
+	zermelogo "github.com/blacklizardcode/zermelogo"
 	"os"
 	"strconv"
 )

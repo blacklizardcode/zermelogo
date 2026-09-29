@@ -7,6 +7,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// ContractsParams holds the query filters for GetContracts and the fields of the
+// records it returns. Zermelo uses the same field names in requests and
+// responses, so one struct covers both. Zero values are omitted, and Fields
+// selects the columns to return.
 type ContractsParams struct {
 	Employee                                         string             `url:"employee,omitempty" json:"employee,omitempty"`
 	End                                              string             `url:"end,omitempty" json:"end,omitempty"`
@@ -130,6 +134,8 @@ type ContractsParams struct {
 	Year                                             int                `url:"year,omitempty" json:"year,omitempty"`
 }
 
+// ContractsResponse is the envelope the Zermelo API wraps around every response.
+// Data holds the decoded records and Status holds the reported status.
 type ContractsResponse struct {
 	Response struct {
 		Status int               `json:"status"`
@@ -137,6 +143,8 @@ type ContractsResponse struct {
 	} `json:"response"`
 }
 
+// GetContracts calls /api/v3/contracts and returns the records that match param.
+// A non nil *APIError is returned when the portal rejects the request.
 func (c *Client) GetContracts(param ContractsParams) ([]ContractsParams, error) {
 	var Output ContractsResponse
 	path, err := url.Parse("/api/v3/contracts")

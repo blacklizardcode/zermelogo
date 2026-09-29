@@ -12,14 +12,19 @@ type tokenResponse struct {
 	Expires_in   int    `json:"expires_in"`
 }
 
+// AuthService handles the OAuth exchange used by the Zermelo API.
 type AuthService struct {
 	client *Client
 }
 
+// Auth returns the authentication service for this client.
 func (c *Client) Auth() *AuthService {
 	return &AuthService{c}
 }
 
+// CodeToBearer exchanges a single use authentication code for a bearer token.
+// Authentication codes can only be used once and expire quickly, so prefer
+// reusing a token that you already have.
 func (a *AuthService) CodeToBearer(code int) (string, error) {
 	var Bearer tokenResponse
 	path, err := url.Parse("/api/oauth/token")
@@ -37,6 +42,7 @@ func (a *AuthService) CodeToBearer(code int) (string, error) {
 	return Bearer.Access_token, nil
 }
 
+// SetBearerToken stores a bearer token that the client sends with every request.
 func (a *AuthService) SetBearerToken(bearer string) {
 	a.client.apiKey = bearer
 }
